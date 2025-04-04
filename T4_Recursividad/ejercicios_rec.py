@@ -1,5 +1,5 @@
 import sys
-from typing import List, TypeVar
+from typing import List, TypeVar, Any, Tuple
 
 T = TypeVar("T")
 
@@ -122,3 +122,75 @@ def intercalar_listas_1(l1: List[T], l2: List[T]) -> List[T]:
 
 
 print(intercalar_listas_1([3, 4, 5], [1, 3, 7, 9, 11, 13, 15]))
+
+
+def aplanar(lista: List[Any]) -> List[Any]:
+    if lista:
+        if isinstance(lista[0], List):
+            return aplanar(lista[0]) + aplanar(lista[1:])
+        else:
+            return [lista[0]] + aplanar(lista[1:])
+    else:
+        return []
+
+
+def dividir(lista: List[T], pivote: T) -> \
+        Tuple[List[T], List[T]]:
+    menores: List[T] = []
+    mayores: List[T] = []
+    for a in lista:
+        if a < pivote:
+            menores.append(a)
+        else:
+            mayores.append(a)
+    return menores, mayores
+
+
+def quicksort(lista: List[T]) -> List[T]:
+    if len(lista) <= 1:
+        return lista
+    pivote: T = lista[0]
+    tupla: Tuple[List[T], List[T]] = dividir(lista[1:], pivote)
+    return (quicksort(tupla[0]) + [pivote] +
+            quicksort(tupla[1]))
+
+
+def inverso(lista: List[T], i: int = 0) -> List[T]:
+    if i == len(lista):
+        return []
+    nueva_lista: List[T] = inverso(lista, i + 1)
+    nueva_lista.append(lista[i])
+    return nueva_lista
+
+
+def ordenada(lista: List[T], i: int = 0) -> bool:
+    if len(lista) - 1 == i:
+        return True
+    else:
+        return (lista[i] <= lista[i + 1] and
+                ordenada(lista, i + 1))
+
+
+# modifica el parámetro lista
+def insertar_ordenado(lista:List[int], n:int, i:int = 0):
+    if i == len(lista):
+        lista.append(n)
+        return lista
+    else:
+        if lista[i] < n:
+            return insertar_ordenado(lista, n, i+1)
+        else:
+            lista.insert(i, n)
+            return lista
+
+
+def insertar_ord(lista: List[int], a: int, result: List[T] = [], i: int = 0) -> List[int]:
+    """
+    PRE: lista está ordenada de menor a mayor
+    """
+    if i == len(lista) or a <= lista[i]:
+        result.append(a)
+        return result + lista[i:]
+    else:
+        result.append(lista[i])
+        return insertar_ord(lista, a, result, i + 1)
