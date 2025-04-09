@@ -194,3 +194,23 @@ def insertar_ord(lista: List[int], a: int, result: List[T] = [], i: int = 0) -> 
     else:
         result.append(lista[i])
         return insertar_ord(lista, a, result, i + 1)
+
+
+def suma_aux(n1: List[int], n2: List[int], i: int, acarreo: int = 0) -> List[int]:
+    if i >= 0:
+        total: int = n1[i] + n2[i] + acarreo
+        sig_acarreo: int = (1 if total > 9 else 0)
+        result: List[int] = suma_aux(n1, n2, i - 1, sig_acarreo)
+        result.append(total - sig_acarreo * 10)
+        return result
+    else:
+        return [] if acarreo == 0 else [acarreo]
+
+
+def suma(n1: List[int], n2: List[int]) -> List[int]:
+    return suma_aux([0] * (len(n2) - len(n1)) + n1,
+                    [0] * (len(n1) - len(n2)) + n2,
+                    max(len(n1), len(n2)) - 1)
+
+
+print(suma([3, 4], [1, 0, 0, 0]))
