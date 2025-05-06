@@ -5,7 +5,7 @@ from tads.tree.linked_binary_tree import IBinaryTree
 from tads.tree.linked_binary_tree import LinkedBinaryTree
 
 T = TypeVar('T')
-
+# árbol de prueba
 tree: LinkedBinaryTree[int] = LinkedBinaryTree()
 tree.add_root(10)
 nl: IPosition = tree.add_left(tree.root, 2)
