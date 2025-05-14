@@ -1,4 +1,3 @@
-from collections import defaultdict
 from typing import List, Set, Dict
 
 lucia: Set[str] = {"C. Tangana", "Rosalia", "Taylor Swift", "Tame Impala", "Delaossa"}
