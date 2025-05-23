@@ -40,7 +40,17 @@ def vertex_cover(udg: IUndirectedGraph[V, E]) -> Set[Vertex[V]]:
     udg1: IUndirectedGraph[V, E] = copy.deepcopy(udg)
     result: Set[Vertex[V]] = set()
     edges: Iterator[Edge[V, E]] = udg1.edges()
-    # TO-DO
+    edge: Edge[V, E] = next(edges, None)
+    u: Vertex[V]
+    v: Vertex[V]
+    while edge is not None:
+        u, v = edge.endpoints()
+        result.add(u)
+        result.add(v)
+        udg1.remove_vertex(u)
+        udg1.remove_vertex(v)
+        edges = udg1.edges()
+        edge = next(edges, None)
     return result
 
 
